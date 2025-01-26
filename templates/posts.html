@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% load custom_tags %}
+
+{% block title %}
+Все новости
+{% endblock title %}
+
+{% block content %}
+ <form class="d-flex" action="" method="get">
+            {{ filterset.form.as_p }}
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Найти</button>
+          </form>
+<br/>
+{% if is_not_premium %}
+<button> <a href="sign/upgrade/"> Стать автором</a> </button>
+{% endif %}
+{% if is_not_subscriber %}
+    <p><a href="{% url 'subscribe' category.id %}"> Подписаться</a></p>
+{% endif %}
+<h1> Все новости </h1>
+{{ time_now|date:'d M Y' }}
+
+<div class="contaiter">
+    <div class="row", style="margin-top:50px;">
+        {% for post in posts_list %}
+        <div class="col-sm">
+            <div class="card border-secondary md-3" style="max-width: 20rem;">
+                <div class="card-header"><h3>{{post.post_title|censor }}</h3>   {{ time_now|date:'M d Y' }}</div>
+                <div class="card-body">
+                    <h4 class="card-title">{{post.post_author}}</h4>
+                    <p class="card-text">{{post.post_content|truncatewords:20|censor  }}</p>
+                    <label for="start">Дата публикации:</label>
+                    <input type="date" id="start" name="trip-start" value="2018-07-22"  />
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+
+ {# Добавляем пагинацию на страницу #}
+
+   {# Информация о предыдущих страницах #}
+   {% if page_obj.has_previous %}
+       <a href="?{% url_replace page=1 %}">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {# Информация о текущей странице #}
+   {{ page_obj.number }}
+
+   {# Информация о следующих страницах #}
+   {% if page_obj.has_next %}
+       <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+
+{% endblock content %}

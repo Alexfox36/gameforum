@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% load custom_tags %}
+
+<!-- Название у нас будет Product -->
+{% block title %}
+Отдельный пост
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам товар, идентификатор которого был передан в url -->
+
+{% block content %}
+<br/>
+<h1>{{ single_post }}</h1>
+<br/>
+{{ single_post.post_content}}
+<hr/>
+ <h3>{% current_time '%d %b %Y' %}</h3>
+{% endblock content %}

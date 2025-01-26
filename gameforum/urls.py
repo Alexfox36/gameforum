@@ -15,11 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path, include
 
-from board.views import BaseView
+from board.views import BaseView, PostsList, PostsDetail, PostCreate, PostUpdate, PostDelete, PostSearch
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', BaseView.as_view()),
+    path('posts/', PostsList.as_view(), name='post_list'),
+    path('singlepost/<int:pk>', PostsDetail.as_view(), name='post_detail'),
+    path('posts/create/', PostCreate.as_view(), name='post_create'),
+    path('posts/<int:pk>/update/', PostUpdate.as_view(), name='post_update'),
+    path('posts/<int:pk>/delete/', PostDelete.as_view(), name='post_delete'),
+    path('posts/search/', PostSearch.as_view(), name='post_search'),
+    re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
