@@ -23,7 +23,7 @@ class PostsList(ListView):
 
 class PostsDetail(DetailView):
     model = Post
-    template_name = 'singlepost.html'
+    template_name = 'post.html'
     context_object_name = 'single_post'
 
 
