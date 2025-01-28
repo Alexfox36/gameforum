@@ -3,17 +3,19 @@
 {% load custom_tags %}
 
 {% block title %}
-Все новости
 {% endblock title %}
 
 {% block content %}
  <form class="d-flex" action="" method="get">
             {{ filterset.form.as_p }}
+
             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Найти</button>
           </form>
 <br/>
 
 <h1> Все новости </h1>
+<br/>
+<a href="{% url 'post_create' %}" > предложить новость</a>
 {{ time_now|date:'d M Y' }}
 
 <div class="contaiter">
@@ -21,13 +23,12 @@
         {% for post in posts_list %}
         <div class="col-sm">
             <div class="card border-secondary md-3" style="max-width: 20rem;">
-                <div class="card-header"><h3>{{post.post_title|censor }}</h3>   {{ time_now|date:'M d Y' }}</div>
+                <div class="card-header"><a href="{% url 'post_detail' pk=post.pk %}" ><h3>{{post.post_title|censor }}</h3></a>  {{ time_now|date:'M d Y' }}</div>
                 <div class="card-body">
                     <h4 class="card-title">{{post.post_author}}</h4>
                     <p class="card-text">{{post.post_content|truncatewords:20|censor  }}</p>
                     <label for="start">Дата публикации:</label>
                     <input type="date" id="start" name="trip-start" value="2018-07-22"  />
-                    <button> <a href="#"> open</a> </button>
 
                 </div>
             </div>
