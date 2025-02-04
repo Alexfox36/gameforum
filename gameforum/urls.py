@@ -19,6 +19,11 @@ from django.urls import path, re_path, include
 
 from board.views import BaseView, PostsList, PostsDetail, PostCreate, PostUpdate, PostDelete, PostSearch
 
+from django.contrib import admin
+from django.urls import path, include
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', BaseView.as_view()),
@@ -29,4 +34,10 @@ urlpatterns = [
     path('posts/<int:pk>/delete/', PostDelete.as_view(), name='post_delete'),
     path('posts/search/', PostSearch.as_view(), name='post_search'),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
+
+    path('admin/', admin.site.urls),
+    path('api/accounts/', include('accounts.urls')),    #new
+    path('api/accounts/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/accounts/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
 ]
