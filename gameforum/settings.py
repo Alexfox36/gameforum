@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'board',
     'sign',
 
-    'rest_framework_serializer_extensions',
+
+
 ]
 
 MIDDLEWARE = [

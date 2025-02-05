@@ -1,28 +1,16 @@
-import random
-import string
-from django.core.mail import EmailMultiAlternatives
-from django.utils.html import strip_tags
-import smtplib
-from core.settings import auth, sender,EMAIL_HOST, EMAIL_PORT
-from email.mime.text import MIMEText
+import pyotp
+import request
+from datetime import datetime, timedelta
+
+
+def send_otp():
+    totp = pyotp.TOTP(pyotp.random_base32(), interval=60)
+    otp = totp.now()
+    request.session['otp_sekret_key'] = totp.secret
+    valid_date = datetime.now() + timedelta(minutes=1)
+    request.session['otp_valid_date'] = str(valid_date)
+
+    print(f"Ваш код подтверждения {otp}")
 
 
 
-def generate_otp(length=6):
-    characters = string.digits
-    otp = ''.join(random.choice(characters) for _ in range(length))
-    return otp
-
-
-def Send_email_with_zoho_server(to_email, message):
-    print('hello you!')
-    msg = MIMEText(message)
-    msg['Subject'] = "OTP from Sample Projects"
-    msg['From'] = sender
-    to = [to_email],
-
-    server = smtplib.SMTP_SSL(EMAIL_HOST, EMAIL_PORT)
-    server.login(sender, auth)
-    server.sendmail(sender, to, msg.as_string())
-
-    server.quit()

@@ -1,14 +1,11 @@
+from django.contrib.auth.models import User
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser
+
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.urls import reverse
 
 
-class User(AbstractUser):
-    # other fields
 
- otp = models.CharField(max_length=6, blank=True, null=True)
- otp_verified = models.BooleanField(default=False)
 
 CATEGORY_CHOICES = (("TN", "Танки"),
                     ("HL", "Хилы"),
