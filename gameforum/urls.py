@@ -11,7 +11,7 @@ from sign.views import main_view, login_view, otp_view, logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', BaseView.as_view()),
+   # path('', BaseView.as_view()),
     path('posts/', PostsList.as_view(), name='post_list'),
     path('posts/<int:pk>', PostsDetail.as_view(), name='post_detail'),
     path('posts/create/', PostCreate.as_view(), name='post_create'),

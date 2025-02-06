@@ -154,4 +154,4 @@ EMAIL_PORT = os.getenv('EMAIL_PORT')
 sender = os.getenv('sender')
 auth = os.getenv('auth')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
-AUTH_USER_MODEL = 'accounts.User'
+

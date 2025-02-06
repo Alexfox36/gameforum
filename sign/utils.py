@@ -3,7 +3,7 @@ import request
 from datetime import datetime, timedelta
 
 
-def send_otp():
+def send_otp(request):
     totp = pyotp.TOTP(pyotp.random_base32(), interval=60)
     otp = totp.now()
     request.session['otp_sekret_key'] = totp.secret

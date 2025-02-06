@@ -3,7 +3,7 @@ import pyotp
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
-from board.utils import send_otp
+from .utils import send_otp
 from django.contrib.auth.models import User
 
 
@@ -15,11 +15,12 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             send_otp(request)
-            request.session['username']=username
+            request.session['username'] = username
             return redirect('otp')
         else:
-            error_meggage = 'Неверныое имя пользователя или пароль'
-    return render(request, 'login.html', {'error_message':error_meggage})
+            error_message = 'Неверныое имя пользователя или пароль'
+    return render(request, 'login.html', {'error_message':error_message})
+
 
 def otp_view(request):
     error_message = None
@@ -27,7 +28,7 @@ def otp_view(request):
         otp = request.POST['otp']
         username = request.session['username']
 
-        otp_secret_key =  request.session['otp_secret_key']
+        otp_secret_key = request.session['otp_secret_key']
         otp_valid_until = request.session['otp_valid_date']
 
         if otp_secret_key and otp_valid_until is not None:
@@ -41,16 +42,16 @@ def otp_view(request):
                     del request.session['otp_secret_key']
                     del request.session['otp_valid_date']
 
-                    return redirect('index')
+                    return redirect('main')
+                else:
+                    pass
             else:
                 pass
         else:
             pass
-    else:
-        pass
 
+    return render(request, 'otp.html', {})
 
-    return render(request, 'otp.html',{})
 
 @login_required
 def main_view(request):
@@ -58,7 +59,7 @@ def main_view(request):
         del request.session['username']
     return render(request, 'main.html', {})
 
+
 def logout_view(request):
     logout()
     return redirect('login')
-

@@ -6,7 +6,7 @@
     <p> {{ error_message }}</p>
 {% endif %}
 <form method="POST">
-    {% csfr token %}
+    {% csrf_token %}
     <div>
         <label for="username">username</label>
         <input  class="form-control" type="text" name="username" required>
