@@ -1,14 +1,16 @@
-{% extends "allauth/layouts/entrance.html" %}
+{% extends "base.html" %}
 {% load i18n %}
 {% load allauth %}
-{% block head_title %}
-    {% translate "Account Inactive" %}
-{% endblock head_title %}
+{% block title %}
+Активация
+{% endblock title %}
 {% block content %}
-    {% element h1 %}
-        {% translate "Account Inactive" %}
-    {% endelement %}
-    {% element p %}
-        {% translate "This account is inactive." %}
-    {% endelement %}
+<h2>Активация аккаунта</h2>
+    <form action="{% url 'confirm_signup' %}" method="post">
+    {% csrf_token %}
+        <label for="code">Введите код</label>
+        <input type="text" name="code" id="code">
+        <input type="submit" value="отправить">
+        
+    </form>
 {% endblock content %}

@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-from django.conf.global_settings import SILENCED_SYSTEM_CHECKS
+from django.conf.global_settings import SILENCED_SYSTEM_CHECKS, LOGIN_URL, LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,9 +50,6 @@ INSTALLED_APPS = [
     'sign',
     'allauth',
     'allauth.account',
-
-
-
 ]
 
 MIDDLEWARE = [
@@ -120,8 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
+
 
 LANGUAGE_CODE = 'en-us'
 
@@ -151,7 +147,7 @@ SILENCED_SYSTEM_CHECKS = ["ckeditor.W001"]
 
 # ... other configurations
 # Email configuration
-EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = bool(os.getenv('EMAIL_USE_TLS'))
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
@@ -161,3 +157,14 @@ sender = os.getenv('sender')
 auth = os.getenv('auth')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/posts/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+ACCOUNT_FORM = {'signup':'sign.forms.MyCustomSignupForm'}

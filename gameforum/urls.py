@@ -1,7 +1,7 @@
 from board.views import BaseView, PostsList, PostsDetail, PostCreate, PostUpdate, PostDelete, PostSearch
 from django.contrib import admin
 from django.urls import path, include, re_path
-
+from sign.views import confirm_signup
 
 
 urlpatterns = [
@@ -16,8 +16,6 @@ urlpatterns = [
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
     path('accounts/', include('allauth.urls')),
-
-
-
+    path('confirm_signup/', confirm_signup, name='confirm_signup'),
 
 ]
