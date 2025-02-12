@@ -1,6 +1,9 @@
 from datetime import datetime
 
+from allauth.socialaccount.providers.mediawiki.provider import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
+from django.db.transaction import commit
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -44,6 +47,20 @@ class PostCreate(CreateView):
     form_class = PostForm
     model = Post
     template_name = 'create.html'
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.user = self.request.user
+        comment.save()
+        send_mail(
+            subject='sddss',
+            massage='dfddfgfg',
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[comment.post.posst_author.email],
+        )
+
+        return super().form_valid(form)
+
 
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
