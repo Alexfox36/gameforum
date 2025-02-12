@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
-{% load allauth %}
+
 {% block title %}
 Активация
 {% endblock title %}
@@ -9,8 +8,11 @@
     <form action="{% url 'confirm_signup' %}" method="post">
     {% csrf_token %}
         <label for="code">Введите код</label>
+        <label>
         <input type="text" name="code" id="code">
-        <input type="submit" value="отправить">
+            <input type="submit" value="отправить">
+        </label>
+
         
     </form>
 {% endblock content %}

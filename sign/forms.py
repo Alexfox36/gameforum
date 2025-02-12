@@ -1,7 +1,5 @@
 from allauth.account.forms import SignupForm
 from django.core.mail import send_mail
-from pyexpat.errors import messages
-
 from board.models import OneTimeCode
 import random
 from string import hexdigits
